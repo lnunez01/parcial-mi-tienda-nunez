@@ -3,6 +3,7 @@ import { Alert, FlatList, StyleSheet, Text, TextInput, View } from 'react-native
 import { router } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
 import { productActions, useProducts, type ProductRow } from '@/hooks/useProducts';
+import { useSync } from '@/hooks/useSync';
 import { ProductItem } from '@/components/ProductItem';
 import { Button, Message } from '@/components/ui';
 import { colors } from '@/constants/theme';
@@ -12,6 +13,7 @@ export default function InventarioScreen() {
   const { session, signOut } = useAuth();
   const [search, setSearch] = useState('');
   const { products, totals, error } = useProducts(search);
+  const { sync, isSyncing, message, isError } = useSync(session?.user.id);
 
   const confirmDelete = (product: ProductRow) => {
     Alert.alert('Eliminar producto', `¿Seguro que quieres eliminar "${product.name}"?`, [
@@ -38,7 +40,15 @@ export default function InventarioScreen() {
         <Stat label="Pendientes" value={String(totals.pending)} highlight={totals.pending > 0} />
       </View>
 
-      <Button title="+ Agregar producto" onPress={() => router.push('/producto')} />
+      <View style={styles.actions}>
+        <View style={{ flex: 1 }}>
+          <Button title="☁️ Sincronizar" variant="secondary" onPress={sync} loading={isSyncing} />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Button title="+ Agregar" onPress={() => router.push('/producto')} />
+        </View>
+      </View>
+      {message && <Message tone={isError ? 'error' : 'success'}>{message}</Message>}
 
       <TextInput
         value={search}
@@ -97,6 +107,7 @@ const styles = StyleSheet.create({
   header: { gap: 12, marginBottom: 12 },
   user: { color: colors.muted },
   stats: { flexDirection: 'row', gap: 8 },
+  actions: { flexDirection: 'row', gap: 8 },
   stat: {
     flex: 1,
     backgroundColor: colors.surface,
