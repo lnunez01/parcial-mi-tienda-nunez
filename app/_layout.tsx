@@ -1,19 +1,23 @@
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
+import { db } from '@/db/client';
+import migrations from '@/drizzle/migrations';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { colors } from '@/constants/theme';
 
+function Loading() {
+  return (
+    <View style={styles.center}>
+      <ActivityIndicator color={colors.primary} />
+    </View>
+  );
+}
+
 function RootNavigator() {
   const { session, isLoading } = useAuth();
-
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator color={colors.primary} />
-      </View>
-    );
-  }
+  if (isLoading) return <Loading />;
 
   const isLoggedIn = session !== null;
 
@@ -22,6 +26,7 @@ function RootNavigator() {
       {/* Con sesión: solo Principal y Formulario */}
       <Stack.Protected guard={isLoggedIn}>
         <Stack.Screen name="index" options={{ title: 'Mi Tienda' }} />
+        <Stack.Screen name="producto" options={{ title: 'Producto', presentation: 'modal' }} />
       </Stack.Protected>
       {/* Sin sesión: solo Login y Registro */}
       <Stack.Protected guard={!isLoggedIn}>
@@ -33,6 +38,18 @@ function RootNavigator() {
 }
 
 export default function RootLayout() {
+  // Aplica las migraciones de drizzle/ a SQLite antes de mostrar la app
+  const { success, error } = useMigrations(db, migrations);
+
+  if (error) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.error}>Error al preparar la base de datos: {error.message}</Text>
+      </View>
+    );
+  }
+  if (!success) return <Loading />;
+
   return (
     <AuthProvider>
       <RootNavigator />
@@ -40,3 +57,8 @@ export default function RootLayout() {
     </AuthProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
+  error: { color: colors.danger, textAlign: 'center' },
+});
