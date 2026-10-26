@@ -1,6 +1,6 @@
 # Registro de Auditoría de IA (AI-LOG)
 
-**Estudiante:** _NOMBRE COMPLETO_
+**Estudiante:** Luis Fernando Nuñez Cuello (0182220049)
 **Evaluación:** Parcial — Mi Tienda
 **Herramienta:** Claude Code (asistente de programación con IA)
 

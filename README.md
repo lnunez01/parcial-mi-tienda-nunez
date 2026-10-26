@@ -3,7 +3,7 @@
 App de inventario para la tienda de Doña Rosa: funciona **con o sin internet** (SQLite es la fuente de
 verdad) y guarda una copia en la nube (Supabase) al sincronizar.
 
-**Estudiante:** _NOMBRE COMPLETO_ · **Código:** _CÓDIGO_
+**Estudiante:** Luis Fernando Nuñez Cuello · **Código:** 0182220049
 
 Expo SDK 57 · TypeScript · Expo Router · SQLite + Drizzle ORM · Supabase (Auth + Postgres con RLS)
 
