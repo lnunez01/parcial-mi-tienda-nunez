@@ -65,6 +65,7 @@ export default function InventarioScreen() {
   return (
     <View style={styles.container}>
       <FlatList
+        contentInsetAdjustmentBehavior="automatic"
         data={products}
         keyExtractor={(p) => p.clientId}
         ListHeaderComponent={header}
