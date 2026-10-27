@@ -31,7 +31,9 @@
 - Importar `expo-crypto` en `db/schema.ts` rompe `drizzle-kit generate` (Node no entiende el código de
   Expo). El UUID se genera en el repositorio con `Crypto.randomUUID()`.
 - `npx expo install` no pudo consultar la API de Expo en el entorno; en vez de instalar `@latest`
-  se usaron las versiones de `expo/bundledNativeModules.json`, compatibles con el SDK 57.
+  se usaron las versiones de `expo/bundledNativeModules.json`, compatibles con el SDK del proyecto.
+- Expo Go en iOS se actualizó al SDK 58 durante el parcial y ya no abría el proyecto (SDK 57). Se actualizó
+  el proyecto a SDK 58 con las versiones de `expo/bundledNativeModules.json` (React 19.3, React Native 0.88).
 
 ## 4. Verificación
 
