@@ -47,5 +47,6 @@
   - Al quitar el modo avión se sincronizó solo: "Conexión recuperada: 2 subidos, 0 bajados"
     (panela y la edición de arroz diana).
   - En Supabase hay 4 filas para 4 productos: el upsert por `client_id` no duplicó la edición.
+  - Eliminar con confirmación (mantener presionado) y Cerrar sesión funcionan.
 - Corrección durante las pruebas: en iOS el encabezado nativo es transparente y tapaba el campo
   Correo del Registro; se agregó `contentInsetAdjustmentBehavior="automatic"` a las listas y formularios.
