@@ -48,5 +48,6 @@
     (panela y la edición de arroz diana).
   - En Supabase hay 4 filas para 4 productos: el upsert por `client_id` no duplicó la edición.
   - Eliminar con confirmación (mantener presionado) y Cerrar sesión funcionan.
+  - La sesión se mantiene al cerrar Expo Go por completo y volver a abrir la app (SecureStore).
 - Corrección durante las pruebas: en iOS el encabezado nativo es transparente y tapaba el campo
   Correo del Registro; se agregó `contentInsetAdjustmentBehavior="automatic"` a las listas y formularios.
