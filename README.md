@@ -46,7 +46,7 @@ Si cambias `db/schema.ts`, genera una migración nueva con `npx drizzle-kit gene
 ## Estructura
 
 ```
-app/_layout.tsx          → migraciones + AuthProvider + Stack.Protected
+app/_layout.tsx          → AuthProvider + Stack.Protected (migraciones vía hooks/useDatabase.ts)
 app/login.tsx            → inicio de sesión
 app/registro.tsx         → registro con validaciones
 app/index.tsx            → inventario: lista, totales, pendientes, Sincronizar, Agregar, Cerrar sesión
@@ -57,6 +57,7 @@ lib/secureStorage.ts     → adaptador de SecureStore por fragmentos para la ses
 db/schema.ts             → tabla products (Drizzle)
 db/client.ts             → SQLite con enableChangeListener
 db/repositories/products.ts → todo el acceso a SQLite (las pantallas no importan Drizzle)
+hooks/useDatabase.ts     → useMigrations
 hooks/useProducts.ts     → useLiveQuery + totales
 hooks/useSync.ts         → estado del botón Sincronizar + sincronización automática
 services/sync.ts         → syncProducts(userId): bajar y luego subir

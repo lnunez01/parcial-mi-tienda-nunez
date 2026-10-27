@@ -1,9 +1,7 @@
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
-import { db } from '@/db/client';
-import migrations from '@/drizzle/migrations';
+import { useDatabase } from '@/hooks/useDatabase';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { colors } from '@/constants/theme';
 
@@ -38,17 +36,17 @@ function RootNavigator() {
 }
 
 export default function RootLayout() {
-  // Aplica las migraciones de drizzle/ a SQLite antes de mostrar la app
-  const { success, error } = useMigrations(db, migrations);
+  // Aplica las migraciones de drizzle/ (useMigrations) antes de mostrar la app
+  const { isReady, error } = useDatabase();
 
   if (error) {
     return (
       <View style={styles.center}>
-        <Text style={styles.error}>Error al preparar la base de datos: {error.message}</Text>
+        <Text style={styles.error}>Error al preparar la base de datos: {error}</Text>
       </View>
     );
   }
-  if (!success) return <Loading />;
+  if (!isReady) return <Loading />;
 
   return (
     <AuthProvider>
