@@ -40,4 +40,12 @@
 - `npx tsc --noEmit` y `npx expo lint`: sin errores.
 - `npx drizzle-kit generate`: migración `drizzle/0000_*.sql` generada.
 - `npx expo export --platform ios`: el bundle compila e incluye la migración.
-- Pruebas en el teléfono: _completar_.
+- Pruebas en iPhone con Expo Go (capturas en `capturas/`):
+  - Registro con validación ("Las contraseñas no coinciden") y luego cuenta creada con sesión iniciada.
+  - CRUD de productos; al sincronizar: "3 subidos, 0 bajados".
+  - En modo avión se creó "panela" (⏳ Pendiente) y Sincronizar mostró "Sin conexión a internet".
+  - Al quitar el modo avión se sincronizó solo: "Conexión recuperada: 2 subidos, 0 bajados"
+    (panela y la edición de arroz diana).
+  - En Supabase hay 4 filas para 4 productos: el upsert por `client_id` no duplicó la edición.
+- Corrección durante las pruebas: en iOS el encabezado nativo es transparente y tapaba el campo
+  Correo del Registro; se agregó `contentInsetAdjustmentBehavior="automatic"` a las listas y formularios.
